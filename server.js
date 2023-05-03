@@ -2,6 +2,8 @@ const express = require('express')
 const mysql = require('mysql')
 const myconn = require('express-myconnection')
 const cors = require('cors')
+const { patch } = require('./routes/routes')
+const path = require('path')
 
 
 const app = express()
@@ -17,6 +19,7 @@ app.use(myconn(mysql,{
 }))
 
 app.use(cors())
+app.use(express.static(path.join(__dirname, 'dbimages')))
 
 
 app.use(require('./routes/routes'))
