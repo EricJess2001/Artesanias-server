@@ -70,4 +70,27 @@ router.get('/images/get',(req, res) => {
 })
 
 
+router.delete('/images/delete/:id',(req, res) => {
+
+  req.getConnection((err, conn)  => {
+     if(err) return res.status(500).send('server error')
+
+    
+     
+     conn.query('DELETE FROM image WHERE id = ?',  [req.params.id],  (err, rows) =>{
+       if(err) return res.status(500).send('server error')
+
+       fs.unlinkSync(path.join(__dirname, '../dbimages/' + req.params.id + '-monkeywit.png'))
+
+
+       res.json('la imagen fue borrada')
+       
+
+     })
+
+  })
+
+
+})
+
 module.exports = router
